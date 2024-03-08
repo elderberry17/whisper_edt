@@ -35,6 +35,12 @@ if TYPE_CHECKING:
     from .model import Whisper
 
 
+import whisper
+import numpy as np
+import torch
+import tqdm
+from typing import Union, Optional, Tuple, List, Dict
+
 def transcribe(
     model: "Whisper",
     audio: Union[str, np.ndarray, torch.Tensor],
@@ -427,6 +433,17 @@ def transcribe(
             pbar.update(min(content_frames, seek) - previous_seek)
 
             yield current_segments, all_tokens
+
+    return new_segment
+
+
+
+
+    # return dict(
+    #     text=tokenizer.decode(all_tokens[len(initial_prompt_tokens) :]),
+    #     segments=all_segments,
+    #     language=language,
+    # )
 
 
 def cli():
